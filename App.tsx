@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable prettier/prettier,quotes */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -55,12 +55,13 @@ const Section: React.FC<PropsWithChildren<{
 const App = () => {
     const isDarkMode = useColorScheme() === 'dark';
 
+    // cipher generated as RSA/ECB/OAEPWithSHA-256AndMGF1Padding
     const testCipher_gh56 = 'QK5pP83ZaaHF+HOr8XAZ6kXyFvSCQWEKlGgEdEQbCvpEa4rq57poO38+gBYXOtrs' +
         'vTtxOKAbW96FgybrVRdrW95IkyqUN121FuiHBCkhSUNav188KYKqmZEj4Kf+V7h9pljtQrcxaVNp9nOSfGyO' +
         '70v18ATOuSlUEP0QiJVsynnuf7t+SQTNuSHqSjAnoQcu9/KsZFakfRSETg6Z1FuNeex3hkOhRl2K3fVhhZsQ' +
         'sEAW1KKrP2ONHEtoSlV09CWpaTlx9nEnmNovh/1FAuHZ7+Nu2UqQKKT+rpa8kaij2Ks7Fb87uhZRnA8gU+AP' +
         'cMnHBfca+GHMvMX7jJQuOujSiA==';
-    const testKey_gh56 = '-----BEGIN RSA PRIVATE KEY-----' +
+    const testKey_gh56 = '-----BEGIN RSA PRIVATE KEY-----\n' +
         'MIIEpAIBAAKCAQEAqINTkDRjJ3dtq28jbWJaUhIWN4OKaLj50D6V0bDkspXDgviLf2ZvEfmg6Dlr' +
         'plVl4156lDojylFvpuNDEC9YItcuVD43095mvmho/LOypLcwx1RKN6etY5RYX1YZC0si9qsDMgEl' +
         'ZUrTEwXeEYaYLS5VG+uOixxa94f1seEy9usLd8ISMzcb0sEvurZTx6hBwE61R9slJTlL7paWvJ6v' +
@@ -81,16 +82,23 @@ const App = () => {
         'VxSnw1WJY7GQmNPk/38imns8aBI0xWdt32kmEFD0enysaozZCDprS4gK8BZm4iaoTxyZ8rq26DmZ' +
         'X8Qznv4rJBzxM0SxB1YECewBXP5fxY2eW3U3hFFnX+Yp0QKBgQDbY41wFkswdz9BnzRF25eMlBQn' +
         'AjbXnO93FWWtexPXzLmqXJOt4lgF2YTv6YlosS5zrAGhaDHCZTiPrajqILeheS4RmYyzm6UvI2w6' +
-        'QJ9NbxR/6plxTdCuhuL8JTBIakjRNAWWQa2l71rDvOeMvkh8ES00We9PRLTyG3iMruasEA==' +
+        'QJ9NbxR/6plxTdCuhuL8JTBIakjRNAWWQa2l71rDvOeMvkh8ES00We9PRLTyG3iMruasEA==\n' +
         '-----END RSA PRIVATE KEY-----';
 
-    const [decrypted, setDecrypted] = useState("");
+    const [decrypted, setDecrypted] = useState('');
+    const [decrypted_b64, setDecrypted_b64] = useState('');
+    const [jsi] = useState(true);
+    const [running, setRunning] = useState(false);
 
+    RSA.useJSI = false;
     RSA.decryptOAEP(testCipher_gh56, '', Hash.SHA256, testKey_gh56)
         .then((res: string) => {
+            const dec_b64 = Buffer.from(res).toString('base64');
             console.debug(`res_length:${res.length}`);
-            console.debug(`res_b64:${Buffer.from(res).toString('base64')}`);
+            console.debug(`res_b64:${dec_b64}`);
             setDecrypted(res);
+            setDecrypted_b64(dec_b64);
+            setRunning(false);
         });
 
     const backgroundStyle = {
@@ -113,8 +121,20 @@ const App = () => {
                     <Section title="RSA Test">
                         {Boolean(decrypted) && (
                             <>
-                                decrypted input with length: {decrypted.length} (see debug logs)
+                                <>
+                                    using JSI: {jsi} - decrypted input with length: {decrypted.length} (see debug logs)
+                                </>
+                                {Boolean(running) && (
+                                    <>
+                                        [currently running RSA.decryptOAEP ...]
+                                    </>
+                                )}
                             </>
+                        )}
+                    </Section>
+                    <Section title="Decrypted">
+                        {Boolean(decrypted) && (
+                            <Text>{decrypted_b64}</Text>
                         )}
                     </Section>
                 </View>
