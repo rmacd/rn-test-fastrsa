@@ -5739,10 +5739,9 @@ react-native-codegen@^0.70.6:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
-react-native-fast-rsa@^2.3.6:
+react-native-fast-rsa@rmacd/react-native-fast-rsa#fix-encoding-issues:
   version "2.3.6"
-  resolved "https://registry.yarnpkg.com/react-native-fast-rsa/-/react-native-fast-rsa-2.3.6.tgz#36ee7d46f2f83620f0a9979b47780c37a36ae2d7"
-  integrity sha512-zC+EuBg9BXfaGxjHMIs+zLH6Ufx8ilU4RfbZ3gV01JfGjS1dHj8WVEQj316ZZbs8hZM/HxsVmZ/1lm2oupYQnQ==
+  resolved "https://codeload.github.com/rmacd/react-native-fast-rsa/tar.gz/864b667f3d1d1e55c6d324a4374605021f38329f"
   dependencies:
     big-integer "^1.6.51"
     flatbuffers "2.0.6"

@@ -15,7 +15,7 @@
     "flipper-plugin-bridgespy-client": "^0.1.9",
     "react": "18.1.0",
     "react-native": "0.70.5",
-    "react-native-fast-rsa": "^2.3.6"
+    "react-native-fast-rsa": "rmacd/react-native-fast-rsa#fix-encoding-issues"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
