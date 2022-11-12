@@ -20,6 +20,7 @@ import {
     View,
 } from 'react-native';
 import {Buffer} from 'buffer';
+import './MessageSpy';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import RSA, {Hash} from 'react-native-fast-rsa';
@@ -90,9 +91,18 @@ const App = () => {
     const [jsi] = useState(true);
     const [running, setRunning] = useState(false);
 
+    function str2hex(str) {
+        var arr = [];
+        for (var i = 0; i < str.length; i++) {
+            arr[i] = ("00" + str.charCodeAt(i).toString(16)).slice(-4);
+        }
+        return "\\u" + arr.join("\\u");
+    }
+
     RSA.useJSI = false;
     RSA.decryptOAEP(testCipher_gh56, '', Hash.SHA256, testKey_gh56)
         .then((res: string) => {
+            // debugger;
             const dec_b64 = Buffer.from(res).toString('base64');
             console.debug(`res_length:${res.length}`);
             console.debug(`res_b64:${dec_b64}`);

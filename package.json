@@ -5,12 +5,14 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ios-device": "react-native run-ios --device 'RM_IPHONE'",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@react-native-community/checkbox": "^0.5.14",
+    "flipper-plugin-bridgespy-client": "^0.1.9",
     "react": "18.1.0",
     "react-native": "0.70.5",
     "react-native-fast-rsa": "^2.3.6"
@@ -21,7 +23,7 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^26.0.23",
-    "@types/react": "^18.0.21",
+    "@types/react": "^17.0.52",
     "@types/react-native": "^0.70.6",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
